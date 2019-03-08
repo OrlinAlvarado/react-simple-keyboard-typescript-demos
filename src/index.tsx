@@ -5,7 +5,7 @@ import "react-simple-keyboard/build/css/index.css";
 import "./index.css";
 
 class App extends React.Component {
-  keyboard: Keyboard;
+  keyboardRef: Keyboard;
 
   state = {
     layoutName: "default",
@@ -43,7 +43,7 @@ class App extends React.Component {
         input: input
       },
       () => {
-        this.keyboard.setInput(input);
+        this.keyboardRef.keyboard.setInput(input);
       }
     );
   };
@@ -57,7 +57,7 @@ class App extends React.Component {
           onChange={e => this.onChangeInput(e)}
         />
         <Keyboard
-          ref={(r: any) => (this.keyboard = r)}
+          ref={(r: any) => (this.keyboardRef = r)}
           layoutName={this.state.layoutName}
           onChange={(input: string) => this.onChange(input)}
           onKeyPress={(button: string) => this.onKeyPress(button)}
