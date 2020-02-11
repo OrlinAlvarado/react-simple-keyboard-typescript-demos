@@ -1,51 +1,20 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import Keyboard from "react-simple-keyboard";
-import "react-simple-keyboard/build/css/index.css";
-import "./index.css";
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { KeyboardWrapper, Keyboard } from "./KeyboardWrapper";
 
-class App extends React.Component {
+class App extends Component {
   keyboard: Keyboard;
-
-  state = {
-    layoutName: "default",
-    input: ""
-  };
+  state = { input: "" };
 
   onChange = (input: string) => {
-    this.setState({
-      input: input
-    });
+    this.setState({ input });
     console.log("Input changed", input);
   };
 
-  onKeyPress = (button: string) => {
-    console.log("Button pressed", button);
-
-    /**
-     * If you want to handle the shift and caps lock buttons
-     */
-    if (button === "{shift}" || button === "{lock}") this.handleShift();
-  };
-
-  handleShift = () => {
-    let layoutName = this.state.layoutName;
-
-    this.setState({
-      layoutName: layoutName === "default" ? "shift" : "default"
-    });
-  };
-
   onChangeInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    let input = event.target.value;
-    this.setState(
-      {
-        input: input
-      },
-      () => {
-        this.keyboard.setInput(input);
-      }
-    );
+    const input = event.target.value;
+    this.setState({ input });
+    this.keyboard.setInput(input);
   };
 
   public render() {
@@ -56,11 +25,9 @@ class App extends React.Component {
           placeholder={"Tap on the virtual keyboard to start"}
           onChange={e => this.onChangeInput(e)}
         />
-        <Keyboard
-          keyboardRef={(r: any) => (this.keyboard = r)}
-          layoutName={this.state.layoutName}
+        <KeyboardWrapper
+          keyboardRef={r => (this.keyboard = r)}
           onChange={(input: string) => this.onChange(input)}
-          onKeyPress={(button: string) => this.onKeyPress(button)}
         />
       </div>
     );
