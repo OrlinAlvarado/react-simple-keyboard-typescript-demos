@@ -18,16 +18,18 @@ class App extends Component {
   };
 
   public render() {
+    const { onChangeInput, onChange } = this;
+
     return (
       <div>
         <input
           value={this.state.input}
           placeholder={"Tap on the virtual keyboard to start"}
-          onChange={e => this.onChangeInput(e)}
+          onChange={onChangeInput}
         />
         <KeyboardWrapper
           keyboardRef={r => (this.keyboard = r)}
-          onChange={(input: string) => this.onChange(input)}
+          onChange={onChange}
         />
       </div>
     );
